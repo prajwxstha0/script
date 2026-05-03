@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Storm&display=swap');
+</style>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #maindiv{
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #insideDiv{
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img{
+            height: 30rem;
+            width: 18rem;
+        }
+        @media (max-width: 430px) {
+            img{
+                height: 15rem;
+                width: 9rem;
+            }
+        }
+        button{
+              font-family: "Rubik Storm", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  margin: 1rem;
+  height: 2rem;
+  width: 5rem;
+        }
+        button:hover{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="maindiv">
+        <div id="insideDiv">
+            <button type="button" id="hancock">hancock</button>
+            <img src="hancock.jpg" alt="" id="altImg">
+            <!-- <button type="button" id="robin">ROBIN</button> -->
+        </div>
+    </div>
+</body>
+
+
+</html>
+
+<script>
+    // document.getElementById("hancock").addEventListener("click", () => {
+    //     document.getElementById("altImg").src = "hancock.jpg";
+    // })
+
+    //     document.getElementById("robin").addEventListener("click", () => {
+    //     document.getElementById("altImg").src = "robin.jpg";
+    // })
+
+    document.querySelectorAll("button").forEach( (item) => {
+        item.addEventListener("click", () => {
+            item.innerHTML = "hancock" ? (document.getElementById("altImg").src = "robin.jpg", item.innerHTML = "robin") : (document.getElementById("altImg").src = "hancock.jpg", item.innerHTML = "hancock");
+        })
+    })
+</script>
