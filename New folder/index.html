@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            height: 100%;
+            width: 100%;
+        }
+        #main{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7dcdc;
+        }
+        #activity{
+            background-color: #b0d1f6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+        input{
+            padding: 5px;
+            border-style: none;
+        }
+        button{
+            padding: 5px;
+            border-style: none;
+        }
+        button:hover{
+            background-color: #f4c1a6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="activity">
+
+            <div id="inp">
+               <label for="">Enter the activity:</label><input type="text" id="inpVal" placeholder="enter the task">
+               <button type="submit" id="addBtn">Add</button>
+            </div>
+
+            <ul id="inpList">
+                <!-- <li>qwer  <button class="delete">remove</button></li> -->
+            </ul>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    let inpVal = document.getElementById("inpVal");
+    let addBtn = document.getElementById("addBtn");
+    
+    let inpList = document.getElementById("inpList");
+
+    var inputValue = "";
+
+    var arrList = [];
+
+    addBtn.addEventListener("click", () => {
+    if(inpVal.value == ""){
+        inpVal.placeholder = "dont leave the task empty";
+    }
+    else{
+        inputValue = inpVal.value;
+
+        arrList.push(inputValue);
+        inpVal.value = "";
+        
+        addList();
+    }
+    })
+
+    function addList(){
+        inpList.innerHTML= "";
+
+        arrList.forEach( (val, index) => {
+            const li = document.createElement("li");
+
+            li.innerHTML = `${val} <button onclick="deleteTask(${index})">remove</button>`;
+
+            inpList.appendChild(li);
+        })
+    }
+    
+    function deleteTask(index){
+        arrList.splice(index,1);
+        addList();
+    }
+
+</script>
+</html>
