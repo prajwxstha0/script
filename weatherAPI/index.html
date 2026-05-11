@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            height: 100%;
+            width: 100%;
+        }
+        #maindiv{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #main{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #result{
+           display: flex;
+           flex-direction: column;
+           /* justify-content: center; */
+           /* align-items: center; */
+        }
+
+        #iconUrl{
+            size: 40px;
+        }
+
+        #weatherIcon{
+            width: 100px;
+        }
+
+        .weatherInfo{
+            font-size:medium;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="maindiv">
+        <div id="main">
+           <input type="text" placeholder="Enter the city name" id="searchCity">
+           <button id="searchBtn" onclick="searchBtn()">Search</button>
+        </div>
+        <div id="result"></div>
+    </div>
+</body>
+
+<script>
+    let searchCity = document.getElementById("searchCity");
+    let result = document.getElementById("result");
+
+    function searchBtn(){
+        if(searchCity.value == ""){
+            searchCity.placeholder = "dont leave it empty";
+        }else{
+        console.log(searchCity.value);
+        getWeather(searchCity.value);
+        }
+    }
+
+    async function getWeather(cityName){
+        const api = "974435909342a70cd73d7388512b76fc";
+        try{
+
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=metric`);
+
+         if (!res.ok) {
+            if (res.status === 404) {
+                result.innerHTML = `<p>City "${cityName}" not found. Please check the spelling.</p>`;
+            } else if (res.status === 401) {
+                result.innerHTML = `<p>Invalid API key.</p>`;
+            } else {
+                result.innerHTML = `<p>Something went wrong. Status: ${res.status}</p>`;
+            }
+            return; // stop further execution
+        }
+
+        const data = await res.json();
+        const iconCode = data.weather[0].icon;
+         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        
+         result.innerHTML = 
+        `<img src="${iconUrl}" alt="" srcset="" id="weatherIcon">
+        <h2>${data.weather[0].description}</h2>
+        <p class="weatherInfo" >Country : ${data.sys.country}</p>
+        <p class="weatherInfo">Humidity : ${data.main.humidity}</p>
+        <p class="weatherInfo">temp : ${data.main.temp}</p>
+        <p class="weatherInfo">Wind Speed : ${data.wind.speed}</p>
+        `
+
+        }
+        catch(error){
+            result.innerHTML = "network error"
+        }
+    }
+</script>
+</html>
